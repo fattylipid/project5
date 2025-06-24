@@ -9,6 +9,7 @@ from app.operations import (
     Subtraction,
     Multiplication,
     Division,
+    Modulus,
     Power,
     Root,
     OperationFactory,
@@ -135,6 +136,27 @@ class TestDivision(BaseOperationTest):
     }
 
 
+class TestModulus(BaseOperationTest):
+    """Test Modulus operation."""
+
+    operation_class = Modulus
+    valid_test_cases = {
+        "positive_numbers": {"a": "10", "b": "3", "expected": "1"},
+        "negative_numbers": {"a": "-10", "b": "3", "expected": "-1"},
+        "mixed_signs": {"a": "10", "b": "-3", "expected": "1"},
+        "zero_mod": {"a": "0", "b": "5", "expected": "0"},
+        "decimals": {"a": "10.5", "b": "3", "expected": "1.5"},
+    }
+    invalid_test_cases = {
+        "mod_by_zero": {
+            "a": "5",
+            "b": "0",
+            "error": ValidationError,
+            "message": "Division by zero in modulus"
+        },
+    }
+
+
 class TestPower(BaseOperationTest):
     """Test Power operation."""
 
@@ -192,6 +214,7 @@ class TestOperationFactory:
             'subtract': Subtraction,
             'multiply': Multiplication,
             'divide': Division,
+            'mod': Modulus,
             'power': Power,
             'root': Root,
         }

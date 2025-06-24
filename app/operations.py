@@ -168,6 +168,16 @@ class Division(Operation):
         return a / b
 
 
+class Modulus(Operation):
+    def validate_operands(self, a: Decimal, b: Decimal) -> None:
+        if b == 0:
+            raise ValidationError("Division by zero in modulus")
+
+    def execute(self, a: Decimal, b: Decimal) -> Decimal:
+        self.validate_operands(a, b)
+        return a % b
+
+
 class Power(Operation):
     """
     Power (exponentiation) operation implementation.
@@ -264,6 +274,7 @@ class OperationFactory:
         'subtract': Subtraction,
         'multiply': Multiplication,
         'divide': Division,
+        'mod': Modulus,
         'power': Power,
         'root': Root,
     }
